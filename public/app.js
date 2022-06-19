@@ -19,13 +19,14 @@ const messages = []; // { author, date, content, type }
 var socket = io();
 
 chatRoom.addEventListener('change', e => {
+
 	if(e.target.value === 'chat-room-1')
 		socket.off('chat-room-2').on('chat-room-1', message => {
 			addMessage(message)
 		})
-	else if(e.target.value === 'chat-room-2') // --------> changed by me 
+		else
 		socket.off('chat-room-1').on('chat-room-2', message => {
-			addMessage(message)
+			if(message.type != "login" && message.type !== undefined) addMessage(message) // changed by me +
 		})
 });
 
